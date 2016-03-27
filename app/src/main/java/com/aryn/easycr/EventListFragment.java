@@ -24,6 +24,7 @@ import java.util.UUID;
 public class EventListFragment extends ListFragment {
     private static final String TAG = "EventListFragment";
 
+
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         //Event e = (Event)(getListAdapter()).getItem(position);
