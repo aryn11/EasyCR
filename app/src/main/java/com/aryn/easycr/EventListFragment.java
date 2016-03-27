@@ -1,6 +1,7 @@
 package com.aryn.easycr;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 
 /**
@@ -27,6 +29,15 @@ public class EventListFragment extends ListFragment {
         //Event e = (Event)(getListAdapter()).getItem(position);
         Event e = ((EventAdapter)getListAdapter()).getItem(position);
         Log.d(TAG, e.getTitle() + " was clicked");
+        Intent i = new Intent(getActivity(), EventActivity.class);
+        i.putExtra(EventFragment.EXTRA_EVENT_ID, e.getId());
+        startActivity(i);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((EventAdapter)getListAdapter()).notifyDataSetChanged();
     }
 
     private class EventAdapter extends ArrayAdapter<Event> {
@@ -67,6 +78,7 @@ public class EventListFragment extends ListFragment {
         mEvents = EventLab.get(getActivity()).getEvents();
 
         //ArrayAdapter<Event> adapter = new ArrayAdapter<Event>(getActivity(), android.R.layout.simple_list_item_1, mEvents);
+
         EventAdapter adapter = new EventAdapter(mEvents);
         setListAdapter(adapter);
     }
