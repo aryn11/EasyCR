@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context="com.aryn.easycr.EventFragment"
     android:orientation="vertical"
-    android:layout_marginTop="?attr/actionBarSize">
+    >
 
     <TextView
         android:layout_width="match_parent"

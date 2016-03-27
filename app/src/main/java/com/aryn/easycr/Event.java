@@ -41,4 +41,9 @@ public class Event {
     public void setDate(Date mDate) {
         this.mDate = mDate;
     }
+
+    @Override
+    public String toString() {
+        return mTitle;
+    }
 }
