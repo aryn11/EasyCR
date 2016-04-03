@@ -10,8 +10,8 @@ import java.util.UUID;
  * Created by user on 22.03.2016.
  */
 public class EventLab {
-    private static final String TAG = "CrimeLab";
-    private static final String FILENAME = "crimes.json";
+    private static final String TAG = "Event";
+    private static final String FILENAME = "event.json";
     private ArrayList<Event> mEvents;
     private EventJSONSerializer mSerializer;
     private static EventLab sEventLab;
@@ -39,6 +39,9 @@ public class EventLab {
         mEvents.add(event);
     }
 
+    public void deleteEvent(Event c) {
+        mEvents.remove(c);
+    }
 
     public ArrayList<Event> getEvents() {
         return mEvents;
@@ -55,10 +58,10 @@ public class EventLab {
     public boolean saveEvents() {
         try {
             mSerializer.saveEvents(mEvents);
-            Log.d(TAG, "crimes saved to file");
+            Log.d(TAG, "events saved to file");
             return true;
         } catch (Exception e) {
-            Log.e(TAG, "Error saving crimes: ", e);
+            Log.e(TAG, "Error saving events: ", e);
             return false;
         }
     }

@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
@@ -35,6 +38,14 @@ public class EventListFragment extends ListFragment {
         startActivity(i);
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = super.onCreateView(inflater, container, savedInstanceState);
+        ListView listView = (ListView)v.findViewById(android.R.id.list);
+        registerForContextMenu(listView);
+        return v;
+    }
+
     //переписываем адаптер с новыми изменениями
     @Override
     public void onResume() {
@@ -42,6 +53,21 @@ public class EventListFragment extends ListFragment {
         ((EventAdapter)getListAdapter()).notifyDataSetChanged();
     }
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        int position = info.position;
+        EventAdapter adapter = (EventAdapter)getListAdapter();
+        Event event = adapter.getItem(position);
+
+        switch (item.getItemId()) {
+            case R.id.menu_item_delete_event:
+                EventLab.get(getActivity()).deleteEvent(event);
+                adapter.notifyDataSetChanged();
+                return true;
+        }
+        return super.onContextItemSelected(item);
+    }
 
     private class EventAdapter extends ArrayAdapter<Event> {
         public EventAdapter(ArrayList<Event> events) {
@@ -77,6 +103,11 @@ public class EventListFragment extends ListFragment {
 
     public EventListFragment() {
         // Required empty public constructor
+    }
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+    {
+        getActivity().getMenuInflater().inflate(R.menu.event_list_item_context, menu);
     }
 
     @Override
