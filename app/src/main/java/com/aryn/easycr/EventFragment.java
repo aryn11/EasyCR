@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,6 +34,11 @@ public class EventFragment extends Fragment {
     private static final String DIALOG_DATE = "date";
     private static final int REQUEST_DATE = 0;
 
+    //variables for saving local changes (localDate and localTitle)
+    private String lTitle;
+    private Date lDate;
+
+    //Views
     private Event mEvent;
     private EditText mTitleField;
     private Button mDateButton;
@@ -43,8 +49,15 @@ public class EventFragment extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.single_main, menu);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setHasOptionsMenu(true);
         mEvent = new Event();
         UUID eventId = (UUID)getArguments().getSerializable(EXTRA_EVENT_ID);
         mEvent = EventLab.get(getActivity()).getEvent(eventId);
@@ -66,6 +79,7 @@ public class EventFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //lTitle = s.toString();
                 mEvent.setTitle(s.toString());
             }
 
@@ -75,6 +89,7 @@ public class EventFragment extends Fragment {
             }
         });
         mDateButton = (Button)v.findViewById(R.id.crime_date);
+        lDate = mEvent.getDate();
         updateDate();
         mDateButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -91,8 +106,7 @@ public class EventFragment extends Fragment {
         mSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                //dataChanged(true);
             }
         });
 
@@ -114,6 +128,17 @@ public class EventFragment extends Fragment {
         return fragment;
     }
 
+   /* public void dataChanged(boolean isChanged){
+        mEvent.setTitle(lTitle);
+        mEvent.setDate(lDate);
+    }*/
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        EventLab.get(getActivity()).saveEvents();
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != Activity.RESULT_OK) return;
@@ -124,4 +149,6 @@ public class EventFragment extends Fragment {
             updateDate();
         }
     }
+
+
 }

@@ -35,22 +35,28 @@ public class EventListFragment extends ListFragment {
         startActivity(i);
     }
 
+    //переписываем адаптер с новыми изменениями
     @Override
     public void onResume() {
         super.onResume();
         ((EventAdapter)getListAdapter()).notifyDataSetChanged();
     }
 
+
     private class EventAdapter extends ArrayAdapter<Event> {
         public EventAdapter(ArrayList<Event> events) {
             super(getActivity(), 0, events);
+
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if(convertView == null) {
+                /*ListView view = (ListView)convertView.findViewById(R.id.listViewFangbuch);
+                view.setEmptyView(convertView.findViewById(R.id.empty_list_item));*/
                 convertView = getActivity().getLayoutInflater().inflate(R.layout.list_item_events, null);
             }
+
 
             Event event = getItem(position);
 
@@ -76,11 +82,15 @@ public class EventListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mEvents = EventLab.get(getActivity()).getEvents();
 
         //ArrayAdapter<Event> adapter = new ArrayAdapter<Event>(getActivity(), android.R.layout.simple_list_item_1, mEvents);
 
+
+
         EventAdapter adapter = new EventAdapter(mEvents);
+
         setListAdapter(adapter);
     }
 
