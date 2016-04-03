@@ -2,22 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_camara" android:icon="@android:drawable/ic_menu_camera"
-            android:title="Import" />
-        <item android:id="@+id/nav_gallery" android:icon="@android:drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item android:id="@+id/nav_slideshow" android:icon="@android:drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item android:id="@+id/nav_manage" android:icon="@android:drawable/ic_menu_manage"
-            android:title="Tools" />
+        <item android:id="@+id/nav_camara" android:icon="@drawable/ic_storage_black_48dp"
+            android:title="List of events" />
+        <item android:id="@+id/nav_gallery" android:icon="@drawable/ic_person_pin_circle_black_48dp"
+            android:title="Map" />
+        <item android:id="@+id/nav_slideshow" android:icon="@drawable/ic_people_black_48dp"
+            android:title="Car services contacts" />
+
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Settings">
         <menu>
-            <item android:id="@+id/nav_share" android:icon="@android:drawable/ic_menu_share"
-                android:title="Share" />
-            <item android:id="@+id/nav_send" android:icon="@android:drawable/ic_menu_send"
-                android:title="Send" />
+            <item android:id="@+id/nav_share" android:icon="@drawable/ic_directions_car_black_48dp"
+                android:title="My car" />
+            <item android:id="@+id/nav_send" android:icon="@drawable/ic_settings_black_48dp"
+                android:title="Application colors" />
         </menu>
     </item>
 
