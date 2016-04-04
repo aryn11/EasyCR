@@ -17,7 +17,9 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.UUID;
 
 
@@ -91,9 +93,11 @@ public class EventListFragment extends ListFragment {
             titleTextView.setText(event.getTitle());
             TextView dateTextView =
                     (TextView)convertView.findViewById(R.id.event_list_item_dateTextView);
-            dateTextView.setText(event.getDate().toString());
-            CheckBox solvedCheckBox =
-                    (CheckBox)convertView.findViewById(R.id.event_list_item_solvedCheckBox);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH);
+            String data = simpleDateFormat.format(event.getDate());
+
+            dateTextView.setText(data);
+
             //solvedCheckBox.setChecked(event.isSolved());
             return convertView;
         }

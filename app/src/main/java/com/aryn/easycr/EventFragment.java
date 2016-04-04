@@ -43,6 +43,7 @@ public class EventFragment extends Fragment {
     private EditText mTitleField;
     private Button mDateButton;
     private Button mSave;
+    private EditText mDateEdit;
 
     public EventFragment() {
         // Required empty public constructor
@@ -88,7 +89,21 @@ public class EventFragment extends Fragment {
 
             }
         });
-        mDateButton = (Button)v.findViewById(R.id.crime_date);
+        mDateEdit = (EditText)v.findViewById(R.id.event_date);
+        updateDate();
+        mDateEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getActivity()
+                        .getSupportFragmentManager();
+                DatePickerFragment dialog = DatePickerFragment
+                        .newInstance(mEvent.getDate());
+                dialog.setTargetFragment(EventFragment.this, REQUEST_DATE);
+                dialog.show(fm, DIALOG_DATE);
+            }
+        });
+
+        /*mDateButton = (Button)v.findViewById(R.id.crime_date);
         lDate = mEvent.getDate();
         updateDate();
         mDateButton.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +115,7 @@ public class EventFragment extends Fragment {
                 dialog.setTargetFragment(EventFragment.this, REQUEST_DATE);
                 dialog.show(fm, DIALOG_DATE);
             }
-        });
+        });*/
 
         mSave = (Button)v.findViewById(R.id.button_save);
         mSave.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +132,7 @@ public class EventFragment extends Fragment {
     public void updateDate() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, MMM dd, yyyy", Locale.ENGLISH);
         String data = simpleDateFormat.format(mEvent.getDate());
-        mDateButton.setText(data);
+        mDateEdit.setText(data);
     }
 
     public static EventFragment newInstance(UUID eventId) {
